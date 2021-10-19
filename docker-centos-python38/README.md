@@ -14,10 +14,11 @@ REPOSITORY                                  TAG                                 
 python-centos                               3.8                                                     bcf41da40b30   About a minute ago   1.26GB
 ```
 
-# 容器启动命令: 
+# 容器启动
 ```shell script
 docker run -itd --name python --restart always --privileged=true -v /root/dockers/python:/root/python -v /root/dockers/python/cron:/var/spool/cron python-centos:3.8 /usr/sbin/init
 ```
+
 ```shell script
 docker run -itd --name python --restart always --privileged=true python-centos:3.8 /usr/sbin/init
 

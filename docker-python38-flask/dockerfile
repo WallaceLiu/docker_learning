@@ -1,11 +1,18 @@
 FROM python:3.8-slim
+
 RUN mkdir -p /app/
-RUN mkdir -p /lib3/
-COPY sktime-0.7.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl /lib3/sktime-0.7.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+RUN mkdir -p /logs/
 COPY ./* /app/
+COPY ./lib3/* /app/lib3/
+#
+RUN pip install --upgrade pip
+#
+WORKDIR /app/lib3
+RUN pip install sktime-0.7.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
 WORKDIR /app
-RUN python -m pip install -r requirements.txt
-ENV PATH /usr/bin/python:$PATH
+RUN pip install -r requirements.txt
+# ENV PATH /usr/bin/python:$PATH
+RUN chmod u+x /app/run.sh
+ENTRYPOINT ["/bin/bash","-c","/app/run.sh"]
+#
 EXPOSE 8888
-# RUN chmod u+x *.sh
-CMD ['/bin/bash','run.sh']
